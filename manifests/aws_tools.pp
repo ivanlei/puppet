@@ -1,3 +1,4 @@
+require stdlib
 require git
 require python-tools
 require awscli
