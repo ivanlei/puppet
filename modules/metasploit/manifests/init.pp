@@ -7,6 +7,14 @@
 #   - Installs the apt modules metasploit depends on
 #   - Installs metasploit from source and bundles it
 #
+# TODO:
+#   - Manage postgres setup ala http://www.darkoperator.com/installing-metasploit-in-ubunt/
+#   - cat > ~/.msf4/msfconsole.rc << EOF
+#     db_connect -y /usr/local/metasploit/database.yml
+#     workspace -a YourProject
+#     EOF
+#   - A few non ubuntu tips http://fedoraproject.org/wiki/Metasploit_Postgres_Setup#Configure_Metasploit
+#
 # Sample Usage:
 #  class { 'metasploit': }
 #
@@ -16,14 +24,9 @@ class metasploit {
   $ruby_version = 'ruby-1.9.3-p125'
   $metasploit_path = '/usr/local/metasploit'
 
-  class { 'apt':
-    always_apt_update => true,
-    stage => 'setup',
-    before => Stage['rvm-install']
-  }
-
   # Install the prereqs
   class { 'metasploit::dependencies':
+    before => Vcsrepo[$metasploit_path]
   }
 
   # Ensure the proper ruby
