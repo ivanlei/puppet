@@ -10,11 +10,17 @@
 # Sample Usage:
 #  class { 'metasploit': }
 #
-class metasploit() {
+class metasploit {
   require stdlib
 
   $ruby_version = 'ruby-1.9.3-p125'
   $metasploit_path = '/usr/local/metasploit'
+
+  class { 'apt':
+    always_apt_update => true,
+    stage => 'setup',
+    before => Stage['rvm-install']
+  }
 
   # Install the prereqs
   class { 'metasploit::dependencies':
@@ -44,9 +50,9 @@ class metasploit() {
   }
 
   exec { 'bundle_metasploit':
-    command => "sudo rvm ${ruby_version} do bundle install",
+    command => "sudo /usr/local/rvm/bin/rvm ${ruby_version} do bundle install",
     cwd => $metasploit_path,
-    path => ["/usr/bin", "/usr/sbin", "/usr/local/rvm/bin"],
+    path => ["/usr/bin", "/usr/sbin"],
     require => [Vcsrepo[$metasploit_path], Class['metasploit::dependencies']]
   }
 }
