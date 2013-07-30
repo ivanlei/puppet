@@ -1,12 +1,12 @@
 
 class wireless-tools {
-	require python-tools
+  require python-tools
   require hg
 
-  $apt_packages = ['aircrack-ng', 'wireless-tools', 'iw', 'wireshark', 'net-tools']
+  $packages = ['aircrack-ng', 'wireless-tools', 'iw', 'wireshark', 'net-tools']
 
-  package { $apt_packages:
-  	ensure => present,
+  package { $packages:
+    ensure => present,
   }
 
   python-tools::source-install { 'scapy':

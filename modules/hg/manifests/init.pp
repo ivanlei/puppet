@@ -6,7 +6,7 @@
 #  class { 'hg': }
 #
 class hg {
-	package { 'mercurial':
-		ensure => present,
-	}
+  package { 'mercurial':
+    ensure => present,
+  }
 }

@@ -1,22 +1,24 @@
-class metasploit::ruby {
-  include apt::params
+# Class: metasploit::ruby
+#
+# This class installs rvm and ruby
+#
+# Actions:
+#   - Installs rvm and ruby 1.9.3-p125
+#
+class metasploit::ruby(
+  $ruby_version
+) {
+  class { 'rvm': }
 
-  $ruby_version = $metasploit::params::ruby_version
+  rvm_system_ruby { $ruby_version:
+    ensure      => present,
+    default_use => true,
+    require     => Class['rvm'],
+  }
 
-	# Ensure the proper ruby
-	class { 'rvm':
-	}
-
-	rvm_system_ruby { $ruby_version:
-		ensure => present,
-		default_use => true,
-		require => Class['rvm']
-	}
-
-	rvm_gem { 'bundler':
-		name => 'bundler',
-		ruby_version => $ruby_version,
-		ensure => latest,
-		require => Rvm_system_ruby[$ruby_version];
-	}	
+  rvm_gem { 'bundler':
+    ruby_version  => $ruby_version,
+    ensure        => latest,
+    require       => Rvm_system_ruby[$ruby_version],
+  } 
 }

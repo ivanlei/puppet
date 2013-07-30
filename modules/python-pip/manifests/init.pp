@@ -9,13 +9,14 @@
 #  class { 'python-pip': }
 #
 class python-pip {
-  $prereqs = ["build-essential","linux-headers-$kernelrelease","python-dev"]
+  $packages = ['build-essential', "linux-headers-${kernelrelease}", 'python-dev']
 
   package { $prereqs:
   	ensure => present,
-  } ->
+  }
 
   package { 'python-pip':
-    ensure => present,
+    ensure  => present,
+    require => Package[$packages],
   }
 }

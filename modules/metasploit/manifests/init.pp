@@ -1,6 +1,7 @@
 # Class: metasploit
 #
-# This class installs metasploit and dependencies
+# This class installs metasploit and configures a postgres DB for it.
+# To load the DB in metasploit: `db_connect msf@msf`
 #
 # Actions:
 #   - Installs rvm and ruby 1.9.3-p125
@@ -16,39 +17,40 @@
 # Sample Usage:
 #  class { 'metasploit': }
 #
-require stdlib
+class metasploit(
+  $metasploit_path = $metasploit::params::metasploit_path,
+  $ruby_version    = $metasploit::params::ruby_version
+) inherits metasploit::params {
 
-class metasploit {
-  include metasploit::params
+  # Install the required packages
+  class { 'metasploit::dependencies': }
 
-  $metasploit_path = $metasploit::params::metasploit_path
-  $ruby_version = $metasploit::params::ruby_version
-
-  # Install the prereqs
-  class { 'metasploit::dependencies':
+  # Install ruby and rvm
+  class { 'metasploit::ruby': 
+    ruby_version => $ruby_version,
   }
 
-  class { 'metasploit::ruby':
-  }
-
-  vcsrepo { $metasploit_path:
-    ensure => present,
-    provider => 'git',
-    source => 'https://github.com/rapid7/metasploit-framework'
-  }
-
-  exec { 'bundle_metasploit':
-    command => "sudo /usr/local/rvm/bin/rvm ${ruby_version} do bundle install",
-    cwd => $metasploit_path,
-    path => ["/usr/bin", "/usr/sbin"],
-    require => [Class['metasploit::dependencies'], Vcsrepo[$metasploit_path], Class['metasploit::ruby']]
-  }
-
+  # Install postgres
   class { 'metasploit::postgres':
-    require => Class['metasploit::dependencies']
+    require   => Class['metasploit::dependencies'],
   }
 
-  anchor { 'metasploit::anchor':
-    require => [Class['metasploit::postgres'], Class['metasploit::ruby']]
+  # Grab metasploit from github.  Note this is *very* slow as the repo is honking huge.
+  vcsrepo { $metasploit_path:
+    ensure    => present,
+    provider  => 'git',
+    source    => 'https://github.com/rapid7/metasploit-framework',
   }
+
+  # Once all the proper packages are installed, ruby is installed, and metasploit is slurped down,
+  # it is time to bundle metasploit.
+  exec { 'bundle_metasploit':
+    command   => "sudo /usr/local/rvm/bin/rvm ${ruby_version} do bundle install",
+    cwd       => $metasploit_path,
+    path      => ['/usr/bin', '/usr/sbin'],
+    require   => [Class['metasploit::dependencies'], Vcsrepo[$metasploit_path], Class['metasploit::ruby']],
+  }
+
+  # TODO: I don't think this anchor is necessary as the exec effectively anchors the contained classes
+  #anchor { 'metasploit::anchor': require => [Class['metasploit::postgres'], Class['metasploit::ruby']] }
 }

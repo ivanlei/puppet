@@ -3,22 +3,21 @@
 # This class installs awscli
 #
 # Actions:
-#   - Install the awscli package using pip
-#   - Install Python boto package using pip
+#   - Install awscli and boto using pip
 #   - Install s3cmd tool
+#   - Install template cred files
 #
 # Sample Usage:
 #  class { 'awscli': }
 #
 class awscli {
-  require python-tools
+  require python-pip
 
-  # s3cmd and a config file for it
   package { 's3cmd':
-  	ensure => present,
+    ensure => present,
   }
 
-  file { "/home/vagrant/.s3cfg":
+  file { '/home/vagrant/.s3cfg':
     content => template('awscli/s3cfg'),
     mode => '700',
     owner => 'vagrant',
@@ -30,7 +29,7 @@ class awscli {
     provider => 'pip'
   }
   
-  file { "/home/vagrant/.boto":
+  file { '/home/vagrant/.boto':
     content => template('awscli/boto'),
     mode => '700',
     owner => 'vagrant',

@@ -10,24 +10,16 @@
 #   - Install the ipython package
 #
 # Sample Usage:
-#  class { 'python-pip': }
+#  class { 'python-tools': }
 #
 class python-tools {
-  $prereqs = ['build-essential', "linux-headers-$kernelrelease", 'python-dev']
+  require python-pip
 
-  package { $prereqs:
-  	ensure => present,
-  }
+  $pip_packages = ['pudb, virtualenv','simplejson','xmltodict', 'keyring']
 
-  package { 'python-pip':
+  package { $pip_packages:
     ensure => present,
-    require => Package[$prereqs]
-  }
-
-  package { ['pudb, virtualenv','simplejson','xmltodict', 'keyring']:
-    ensure => present,
-    provider => 'pip',
-    require => Package['python-pip']
+    provider => 'pip'
   }  
 
   package { 'python3':
