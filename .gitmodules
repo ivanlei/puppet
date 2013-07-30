@@ -22,3 +22,15 @@
 [submodule "modules/git"]
 	path = modules/git
 	url = git://github.com/puppetlabs/puppetlabs-git.git
+[submodule "modules/postgresql"]
+	path = modules/postgresql
+	url = https://github.com/puppetlabs/puppetlabs-postgresql.git
+[submodule "modules/firewall"]
+	path = modules/firewall
+	url = git://github.com/puppetlabs/puppetlabs-firewall.git
+[submodule "modules/concat"]
+	path = modules/concat
+	url = git://github.com/ripienaar/puppet-concat.git
+[submodule "modules/create_resources"]
+	path = modules/create_resources
+	url = git://github.com/puppetlabs/puppetlabs-create_resources.git
