@@ -9,9 +9,10 @@
 #  class { 'python-pip': }
 #
 class python-pip {
+
   $packages = ['build-essential', "linux-headers-${kernelrelease}", 'python-dev']
 
-  package { $prereqs:
+  package { $packages:
   	ensure => present,
   }
 

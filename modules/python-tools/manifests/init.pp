@@ -15,24 +15,24 @@
 class python-tools {
   require python-pip
 
-  $pip_packages = ['pudb, virtualenv','simplejson','xmltodict', 'keyring']
+  $pip_packages = ['pudb', 'virtualenv', 'simplejson', 'xmltodict', 'keyring']
 
   package { $pip_packages:
-    ensure => present,
-    provider => 'pip'
+    ensure    => present,
+    provider  => 'pip'
   }  
 
   package { 'python3':
-  	ensure => present
+    ensure => present
   }
 
   package { 'ipython':
-  	ensure => present
+    ensure => present
   }
 
   python-tools::source-install { 'keyczar':
-    repo_url => 'https://code.google.com/p/keyczar',
-    repo_name => 'keyczar',
-    install_path => 'python',    
+    repo_url      => 'https://code.google.com/p/keyczar',
+    repo_name     => 'keyczar',
+    install_path  => 'python',    
   }
 }

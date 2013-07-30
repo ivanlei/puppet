@@ -12,6 +12,9 @@ class metasploit::postgres(
   $postgres_db_name   = $metasploit::params::postgres_db_name,
   $metasploit_path    = $metasploit::params::metasploit_path
 ) {
+
+  validate_string($postgres_user, $postgres_password, $postgres_db_name, $metasploit_path)
+
   # Prep the basic server config
   class { 'postgresql':
     # Metasploit requires SQL_ASCII encoding for the DB

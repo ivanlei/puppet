@@ -22,6 +22,8 @@ class metasploit(
   $ruby_version    = $metasploit::params::ruby_version
 ) inherits metasploit::params {
 
+  validate_string($metasploit_path, $ruby_version)
+
   # Install the required packages
   class { 'metasploit::dependencies': }
 

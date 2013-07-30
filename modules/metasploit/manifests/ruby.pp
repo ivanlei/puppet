@@ -8,6 +8,8 @@
 class metasploit::ruby(
   $ruby_version
 ) {
+  validate_string($ruby_version)
+
   class { 'rvm': }
 
   rvm_system_ruby { $ruby_version:
