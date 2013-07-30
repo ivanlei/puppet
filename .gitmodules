@@ -13,9 +13,6 @@
 [submodule "modules/rvm"]
 	path = modules/rvm
 	url = git://github.com/blt04/puppet-rvm.git
-[submodule "modules/acng"]
-	path = modules/acng
-	url = https://github.com/jtopjian/puppet-acng.git
 [submodule "modules/apt-cacher-ng"]
 	path = modules/apt-cacher-ng
 	url = git://github.com/garthk/puppet-apt-cacher-ng
