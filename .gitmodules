@@ -28,3 +28,6 @@
 [submodule "modules/create_resources"]
 	path = modules/create_resources
 	url = git://github.com/puppetlabs/puppetlabs-create_resources.git
+[submodule "modules/metasploit"]
+	path = modules/metasploit
+	url = git@github.com:ivanlei/puppet-metasploit.git
