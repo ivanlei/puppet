@@ -28,3 +28,6 @@
 [submodule "modules/metasploit"]
 	path = modules/metasploit
 	url = git@github.com:ivanlei/puppet-metasploit.git
+[submodule "modules/apt-cacher-ng"]
+	path = modules/apt-cacher-ng
+	url = git@github.com:ivanlei/puppet-apt-cacher-ng.git
