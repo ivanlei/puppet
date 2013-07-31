@@ -34,3 +34,6 @@
 [submodule "modules/rvm"]
 	path = modules/rvm
 	url = git@github.com:ivanlei/puppet-rvm.git
+[submodule "modules/wireless_tools"]
+	path = modules/wireless_tools
+	url = git@github.com:ivanlei/puppet-wireless_tools.git
