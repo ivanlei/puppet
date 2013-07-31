@@ -31,3 +31,6 @@
 [submodule "modules/apt-cacher-ng"]
 	path = modules/apt-cacher-ng
 	url = git@github.com:ivanlei/puppet-apt-cacher-ng.git
+[submodule "modules/rvm"]
+	path = modules/rvm
+	url = git@github.com:ivanlei/puppet-rvm.git
