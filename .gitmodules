@@ -37,3 +37,6 @@
 [submodule "modules/wireless_tools"]
 	path = modules/wireless_tools
 	url = git@github.com:ivanlei/puppet-wireless_tools.git
+[submodule "modules/awscli"]
+	path = modules/awscli
+	url = git@github.com:ivanlei/puppet-awscli.git
