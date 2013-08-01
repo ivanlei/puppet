@@ -1,7 +1,7 @@
 require stdlib
 
 class { 'apt-cacher-ng::client':
-  server  => '192.168.31.2:3142',
+  server  => "${aptserver_ip}:3142",
   autodetect => false,
   stage => 'setup',
   before => [Class['apt']]
