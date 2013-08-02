@@ -37,9 +37,6 @@
 [submodule "modules/wireless_tools"]
 	path = modules/wireless_tools
 	url = git@github.com:ivanlei/puppet-wireless_tools.git
-[submodule "modules/awscli"]
-	path = modules/awscli
-	url = git@github.com:ivanlei/puppet-awscli.git
 [submodule "modules/hg"]
 	path = modules/hg
 	url = git@github.com:ivanlei/puppet-hg.git
@@ -49,3 +46,9 @@
 [submodule "modules/python_pip"]
 	path = modules/python_pip
 	url = git@github.com:ivanlei/puppet-python_pip.git
+[submodule "modules/openstack"]
+	path = modules/openstack
+	url = https://github.com/stackforge/puppet-openstack
+[submodule "modules/aws_tools"]
+	path = modules/aws_tools
+	url = git@github.com:ivanlei/puppet-aws_tools.git

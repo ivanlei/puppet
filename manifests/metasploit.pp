@@ -2,14 +2,16 @@ require stdlib
 
 class { 'apt-cacher-ng::client':
   server  => '192.168.31.2:3142',
-  autodetect => false,
-  stage => 'setup',
-  before => [Class['apt']]
+  stage   => 'setup',
+  before  => [Class['apt']]
 }
 
 class { 'apt':
   always_apt_update => true,
-  stage => 'setup',
+  stage             => 'setup',
 }
 
-class { 'metasploit': }
+class { 'metasploit': 
+  postgres_user     => 'msf',
+  postgres_password => 'msf',
+}
