@@ -31,6 +31,10 @@ Vagrant.configure('2') do |global_config|
       :cpus         => '4',
       :debug        => true,
     },
+    :nopuppet => {
+      :ip           => '10.20.30.50',
+      :no_puppet    => true,
+    }
   }
 
   def bool_to_on_off(val)
@@ -52,6 +56,7 @@ Vagrant.configure('2') do |global_config|
       enable_gui    = vm_settings.fetch(:enable_gui,  false)
       enable_usb    = vm_settings.fetch(:enable_usb,  false)
       forward_ssh   = vm_settings.fetch(:forward_ssh, false)
+      no_puppet     = vm_settings.fetch(:no_puppet,   false)
       debug         = vm_settings.fetch(:debug,       false)
 
       config.ssh.forward_agent  = forward_ssh
@@ -102,15 +107,17 @@ Vagrant.configure('2') do |global_config|
       ###########
       # Puppet  #
       ###########
-      config.vm.provision :puppet do |puppet|
-        puppet.module_path    = '../../modules'
-        puppet.manifests_path = '../../manifests'
-        puppet.manifest_file  = "#{vm_name}.pp"
-        puppet.facter = {
-          'aptserver_ip' => aptserver_ip
-        }
-        if debug
-          puppet.options = "--verbose --debug"
+      if ! no_puppet
+        config.vm.provision :puppet do |puppet|
+          puppet.module_path    = '../../modules'
+          puppet.manifests_path = '../../manifests'
+          puppet.manifest_file  = "#{vm_name}.pp"
+          puppet.facter = {
+            'aptserver_ip' => aptserver_ip
+          }
+          if debug
+            puppet.options = "--verbose --debug"
+          end
         end
       end
     end
