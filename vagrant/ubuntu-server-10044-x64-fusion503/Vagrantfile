@@ -25,12 +25,6 @@ Vagrant.configure('2') do |global_config|
       :ram          => '8192',
       :cpus         => '8',
     },
-    :pptest => {
-      :ip           => '10.20.30.40',
-      :ram          => '4096',
-      :cpus         => '4',
-      :debug        => true,
-    },
     :nopuppet => {
       :ip           => '10.20.30.50',
       :no_puppet    => true,

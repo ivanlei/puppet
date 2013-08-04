@@ -1,8 +1,8 @@
 require stdlib
 require python_pip
 
-class { 'apt-cacher-ng::autoupdate_client':
-  server      => "${aptserver_ip}:3142",
+class { 'apt_cacher_ng::autoupdate_client':
+  servers     => ["${aptserver_ip}:3142"],
   autodetect  => false,
   stage       => 'setup'
 }

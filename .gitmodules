@@ -28,9 +28,6 @@
 [submodule "modules/metasploit"]
 	path = modules/metasploit
 	url = git@github.com:ivanlei/puppet-metasploit.git
-[submodule "modules/apt-cacher-ng"]
-	path = modules/apt-cacher-ng
-	url = git@github.com:ivanlei/puppet-apt-cacher-ng.git
 [submodule "modules/rvm"]
 	path = modules/rvm
 	url = git@github.com:ivanlei/puppet-rvm.git
@@ -52,3 +49,6 @@
 [submodule "modules/aws_tools"]
 	path = modules/aws_tools
 	url = git@github.com:ivanlei/puppet-aws_tools.git
+[submodule "modules/apt_cacher_ng"]
+	path = modules/apt_cacher_ng
+	url = git@github.com:ivanlei/puppet-apt_cacher_ng
