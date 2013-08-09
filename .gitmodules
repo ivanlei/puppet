@@ -52,3 +52,9 @@
 [submodule "modules/apt_cacher_ng"]
 	path = modules/apt_cacher_ng
 	url = git@github.com:ivanlei/puppet-apt_cacher_ng
+[submodule "vagrant/vagrant-puppetconf"]
+	path = vagrant/vagrant-puppetconf
+	url = https://github.com/gposton/vagrant-puppetconf
+[submodule "modules/nodejs"]
+	path = modules/nodejs
+	url = git@github.com:ivanlei/puppet-nodejs

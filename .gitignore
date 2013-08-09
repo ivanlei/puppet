@@ -3,3 +3,5 @@
 ._*
 *~
 .vagrant
+.vagrant.d
+!.vagrant.d/Vagrantfile

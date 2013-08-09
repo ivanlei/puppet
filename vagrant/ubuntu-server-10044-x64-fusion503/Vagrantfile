@@ -24,10 +24,17 @@ Vagrant.configure('2') do |global_config|
       :ip           => '10.20.30.30',
       :ram          => '8192',
       :cpus         => '8',
+      :public_network => true,
     },
     :nopuppet => {
       :ip           => '10.20.30.50',
       :no_puppet    => true,
+    },
+    :nodejs => {
+      :ip           => '10.20.30.60',
+      :ram          => '4096',
+      :cpus         => '4',
+      :enable_gui   => true,
     }
   }
 
@@ -45,20 +52,24 @@ Vagrant.configure('2') do |global_config|
       ###########
       # Params  #
       ###########
-      ram           = vm_settings.fetch(:ram,         '2048')
-      cpus          = vm_settings.fetch(:cpus,        '2')
-      enable_gui    = vm_settings.fetch(:enable_gui,  false)
-      enable_usb    = vm_settings.fetch(:enable_usb,  false)
-      forward_ssh   = vm_settings.fetch(:forward_ssh, false)
-      no_puppet     = vm_settings.fetch(:no_puppet,   false)
-      debug         = vm_settings.fetch(:debug,       false)
+      ram            = vm_settings.fetch(:ram,            '2048')
+      cpus           = vm_settings.fetch(:cpus,           '2')
+      enable_gui     = vm_settings.fetch(:enable_gui,     false)
+      enable_usb     = vm_settings.fetch(:enable_usb,     false)
+      forward_ssh    = vm_settings.fetch(:forward_ssh,    false)
+      no_puppet      = vm_settings.fetch(:no_puppet,      false)
+      debug          = vm_settings.fetch(:debug,          false)
+      public_network = vm_settings.fetch(:public_network, false)
 
       config.ssh.forward_agent  = forward_ssh
       config.vm.hostname        = vm_name
 
-      config.vm.network :private_network, ip: vm_settings[:ip]
-
-      config.vm.synced_folder '../../..', '/vms'
+      if public_network
+        config.vm.network :public_network
+        config.vm.network :forwarded_port, guest: 8000, host: 8008
+      else
+        config.vm.network :private_network, ip: vm_settings[:ip]
+      end
 
       ###############
       # VirtualBox  #
@@ -106,14 +117,14 @@ Vagrant.configure('2') do |global_config|
           puppet.module_path    = '../../modules'
           puppet.manifests_path = '../../manifests'
           puppet.manifest_file  = "#{vm_name}.pp"
-          puppet.facter = {
-            'aptserver_ip' => aptserver_ip
-          }
+          puppet.hiera_config_path = '/vms/hiera.yaml'
+          puppet.working_directory = '/vms/hieradata'
           if debug
             puppet.options = "--verbose --debug"
           end
         end
       end
+
     end
   end
 end

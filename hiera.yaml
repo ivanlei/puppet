@@ -1,0 +1,8 @@
+---
+:backends:
+  - json
+:json:
+  :datadir: '/vms/hieradata'
+:hierarchy:
+  - "%{::custom_location}"
+  - common
