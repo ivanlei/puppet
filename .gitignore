@@ -5,3 +5,6 @@
 .vagrant
 .vagrant.d
 !.vagrant.d/Vagrantfile
+modules/
+.tmp/
+.librarian/
