@@ -1,0 +1,3 @@
+[submodule "git_modules/known_hosts"]
+	path = git_modules/known_hosts
+	url = git@github.com:ivanlei/puppet-known_hosts.git

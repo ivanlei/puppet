@@ -1,0 +1,17 @@
+known_hosts::domain_name: eviloctopus.org
+known_hosts::hosts:
+  - name: puppet
+    ip: 192.168.1.10
+    ram: 2048
+    debug: true
+  - name: awstools
+    ip: 192.168.1.11
+    memory: 2048
+  - name: metasploit
+    ip: 192.168.1.12
+    memory: 8192
+    cpus: 8
+  - name: nodejs
+    ip: 192.168.1.13
+    memory: 4096
+apt_cacher_ng::client::servers: [ 102.168.1.10 ]

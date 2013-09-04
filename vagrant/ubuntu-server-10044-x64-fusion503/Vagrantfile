@@ -1,42 +1,17 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+require 'yaml'
 
 Vagrant.configure('2') do |global_config|
 
-  global_config.vm.box = 'ubuntu-server-10044-x64-fusion503'
-  global_config.vm.box_url = 'https://s3-us-west-1.amazonaws.com/vagaries/ubuntu-server-10044-x64-fusion503.box'
+  global_config.vm.box = 'ubunutu-srv-x64-12042-vb4216'
+  global_config.vm.box_url = '/vms/boxes/ubunutu-srv-x64-12042-vb4216.box'
 
-  # The APT server can be used to 
-  aptserver_ip = '10.20.30.10'
+  # The APT server can be used to
+  hiera_data_path = '/vms/hieradata'
 
-  vms = {
-    :aptserver => {
-      :ip           => aptserver_ip,
-      :ram          => '2048',
-    },
-    :awstools => {
-      :ip           => '10.20.30.20',
-      :forward_ssh  => true,
-      :ram          => '4096',
-      :cpus         => '4',
-    },
-    :metasploit => {
-      :ip           => '10.20.30.30',
-      :ram          => '8192',
-      :cpus         => '8',
-      :public_network => true,
-    },
-    :nopuppet => {
-      :ip           => '10.20.30.50',
-      :no_puppet    => true,
-    },
-    :nodejs => {
-      :ip           => '10.20.30.60',
-      :ram          => '4096',
-      :cpus         => '4',
-      :enable_gui   => true,
-    }
-  }
+  hostsyaml = YAML.load(File.open(hiera_data_path + '/hosts.yaml', File::RDONLY).read)
+  domain_name = hostsyaml['known_hosts::domain_name']
 
   def bool_to_on_off(val)
     if val
@@ -46,7 +21,8 @@ Vagrant.configure('2') do |global_config|
     end
   end
 
-  vms.each_pair do |vm_name, vm_settings|
+  hostsyaml['known_hosts::hosts'].each do |vm_settings|
+    vm_name = vm_settings['name']
     global_config.vm.define vm_name do |config|
 
       ###########
@@ -59,17 +35,12 @@ Vagrant.configure('2') do |global_config|
       forward_ssh    = vm_settings.fetch(:forward_ssh,    false)
       no_puppet      = vm_settings.fetch(:no_puppet,      false)
       debug          = vm_settings.fetch(:debug,          false)
-      public_network = vm_settings.fetch(:public_network, false)
+      enable_nat_dns = false
 
       config.ssh.forward_agent  = forward_ssh
-      config.vm.hostname        = vm_name
+      config.vm.hostname        = "#{vm_name}.#{domain_name}"
 
-      if public_network
-        config.vm.network :public_network
-        config.vm.network :forwarded_port, guest: 8000, host: 8008
-      else
-        config.vm.network :private_network, ip: vm_settings[:ip]
-      end
+      config.vm.network :private_network, ip: vm_settings['ip']
 
       ###############
       # VirtualBox  #
@@ -93,6 +64,13 @@ Vagrant.configure('2') do |global_config|
             '--vram',          '64',
             '--accelerate3d',  'on']
         end
+
+        if enable_nat_dns
+          # https://gist.github.com/mitchellh/1277049
+          vb.customize [
+            'modifyvm',              :id,
+            '--natdnshostresolver1', 'on']
+        end
       end
 
       ##################
@@ -114,14 +92,17 @@ Vagrant.configure('2') do |global_config|
       ###########
       if ! no_puppet
         config.vm.provision :puppet do |puppet|
-          puppet.module_path    = '../../modules'
+          puppet.module_path    = ['../../modules', '../../git_modules']
           puppet.manifests_path = '../../manifests'
           puppet.manifest_file  = "#{vm_name}.pp"
           puppet.hiera_config_path = '/vms/hiera.yaml'
           puppet.working_directory = '/vms/hieradata'
-          if debug
-            puppet.options = "--verbose --debug"
-          end
+          #if debug
+          puppet_debug_options = '--verbose --debug'
+          #else
+          #  puppet_debug_options = ''
+          #end
+          puppet.options = '--parser future ' + puppet_debug_options
         end
       end
 

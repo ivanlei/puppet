@@ -1,7 +1,9 @@
 ---
 :backends:
-  - json
-:json:
-  :datadir: '/vms/hieradata'
+  - yaml
+
+:yaml:
+  :datadir: '/vms/hieradata/'
+
 :hierarchy:
-  - common
+  - hosts
