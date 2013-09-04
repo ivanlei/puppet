@@ -92,16 +92,16 @@ Vagrant.configure('2') do |global_config|
       ###########
       if ! no_puppet
         config.vm.provision :puppet do |puppet|
-          puppet.module_path    = ['../../modules', '../../git_modules']
-          puppet.manifests_path = '../../manifests'
+          puppet.module_path    = ['/vms/modules', '/vms/git_modules']
+          puppet.manifests_path = '/vms/manifests'
           puppet.manifest_file  = "#{vm_name}.pp"
           puppet.hiera_config_path = '/vms/hiera.yaml'
           puppet.working_directory = '/vms/hieradata'
-          #if debug
-          puppet_debug_options = '--verbose --debug'
-          #else
-          #  puppet_debug_options = ''
-          #end
+          if debug
+            puppet_debug_options = '--verbose --debug'
+          else
+            puppet_debug_options = ''
+          end
           puppet.options = '--parser future ' + puppet_debug_options
         end
       end
