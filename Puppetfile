@@ -55,3 +55,6 @@ mod 'ivanlei/apt_cacher_ng',
 mod 'ivanlei/nodejs',
 	:git =>  'git@github.com:ivanlei/puppet-nodejs.git'
 
+mod 'ivanlei/known_hosts',
+	:git =>  'git@github.com:ivanlei/puppet-known_hosts.git'
+

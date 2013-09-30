@@ -1,8 +1,0 @@
-{
-	"aptserver_ip" : "10.20.30.10",
-
-	"apt_cacher_ng::client::servers" : ["%{aptserver_ip}:3142"],
-	"apt_cacher_ng::client::apt_update" : true,
-	
-	"aws_tools::username" : "vagrant"
-}

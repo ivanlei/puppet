@@ -1,3 +1,8 @@
-apt_cacher_ng::client:
-        servers: [ 'puppet' ]
+apt_cacher_ng::client::servers    : ['aptcache.eviloctopus.org:3142']
+apt_cacher_ng::client::apt_update : true
 
+puppet::master::modulepath          : '/vms/modules'
+puppet::master::hiera_config        : '/vms/hiera.yaml'
+puppet::master::storeconfigs        : false
+puppet::master::autosign            : true
+puppet::master::storeconfigs_dbport : '5432'
