@@ -4,7 +4,7 @@ require 'yaml'
 
 Vagrant.configure('2') do |global_config|
 
-  global_config.vm.box = 'ubuntu-server-12043'
+  global_config.vm.box = 'base'
 
   hostsyaml = YAML.load(File.open('/vms/hieradata/hosts.yaml', File::RDONLY).read)
   domain_name = hostsyaml['known_hosts::domain_name']
