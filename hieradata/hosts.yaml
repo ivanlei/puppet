@@ -11,14 +11,19 @@ known_hosts::hosts:
       debug       : true
     - name        : awstools
       ip          : 192.168.1.11
-      provisioner : puppet_server
+      provisioner : puppet
       memory      : 2048
     - name        : metasploit
       ip          : 192.168.1.12
-      provisioner : puppet_server
+      provisioner : puppet
       memory      : 8192
       cpus        : 8
     - name        : nodejs
       ip          : 192.168.1.13
-      provisioner : puppet_server
+      provisioner : puppet
       memory      : 4096
+    - name        : openvas
+      ip          : 192.168.1.14
+      provisioner : puppet
+      memory      : 4096
+

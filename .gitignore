@@ -10,6 +10,6 @@ modules/
 .librarian/
 packer_cache/
 boxes/
-packer/
 Puppetfile.lock
+*.box
 

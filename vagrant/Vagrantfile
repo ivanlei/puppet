@@ -4,13 +4,9 @@ require 'yaml'
 
 Vagrant.configure('2') do |global_config|
 
-  global_config.vm.box = 'ubunutu-srv-x64-12042-vb4216'
-  global_config.vm.box_url = '/vms/boxes/ubunutu-srv-x64-12042-vb4216.box'
+  global_config.vm.box = 'ubuntu-server-12043'
 
-  # The APT server can be used to
-  hiera_data_path = '/vms/hieradata'
-
-  hostsyaml = YAML.load(File.open(hiera_data_path + '/hosts.yaml', File::RDONLY).read)
+  hostsyaml = YAML.load(File.open('/vms/hieradata/hosts.yaml', File::RDONLY).read)
   domain_name = hostsyaml['known_hosts::domain_name']
 
   def bool_to_on_off(val)
@@ -19,13 +15,6 @@ Vagrant.configure('2') do |global_config|
     else
       return 'off'
     end
-  end
-
-  def string_to_bool(val)
-    if val == true || val == 'true' || val == 'True' || val == 'TRUE'
-      return true
-    end
-    return false
   end
 
   hostsyaml['known_hosts::hosts'].each do |vm_settings|
@@ -73,13 +62,6 @@ Vagrant.configure('2') do |global_config|
             '--vram',          '64',
             '--accelerate3d',  'on']
         end
-
-        if enable_nat_dns
-          # https://gist.github.com/mitchellh/1277049
-          vb.customize [
-            'modifyvm',              :id,
-            '--natdnshostresolver1', 'on']
-        end
       end
 
       ##################
@@ -100,11 +82,10 @@ Vagrant.configure('2') do |global_config|
       # Puppet  #
       ###########
       if debug
-        puppet_options_debug = '--verbose --debug'
+        puppet_options = '--verbose --debug'
       else
-        puppet_options_debug = ''
+        puppet_options = ''
       end
-      puppet_options = '--parser future ' + puppet_options_debug
 
       if 'puppet' == provisioner
         config.vm.provision :puppet do |puppet|
@@ -113,7 +94,7 @@ Vagrant.configure('2') do |global_config|
           puppet.manifest_file     = "#{vm_name}.pp"
           puppet.hiera_config_path = '/vms/hiera.yaml'
           puppet.working_directory = '/vms/hieradata'
-          puppet.options           = puppet_options
+          puppet.options           = puppet_options + ' --parser=future'
         end
       end
 
@@ -121,7 +102,7 @@ Vagrant.configure('2') do |global_config|
         config.vm.provision :puppet do |puppet|
           puppet.puppet_server = "puppet.#{domain_name}"
           puppet.puppet_node   = hostname
-          puppet.options       = puppet_options
+          puppet.options       = puppet_options + ' --parser=future'
         end
       end
     end

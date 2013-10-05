@@ -7,7 +7,13 @@
       "type": "shell",
       "scripts": [
         "scripts/base.sh",
-        "scripts/puppet-bootstrap.sh"
+        "scripts/vagrant.sh",
+        "scripts/virtualbox.sh",
+        "scripts/ruby.sh",
+        "scripts/puppet.sh",
+        "scripts/chef.sh",
+        "scripts/cleanup.sh",
+        "scripts/zerodisk.sh"
       ],
       "override": {
         "virtualbox": {
@@ -32,13 +38,13 @@
         "initrd=/install/initrd.gz -- <enter><wait>"
       ],
       "boot_wait": "4s",
-      "disk_size": 40960,
+      "disk_size": 10140,
       "guest_os_type": "Ubuntu_64",
       "headless": "true",
       "http_directory": "http",
       "iso_checksum": "2cbe868812a871242cdcdd8f2fd6feb9",
       "iso_checksum_type": "md5",
-      "iso_url": "http://releases.ubuntu.com/precise/ubuntu-12.04.3-server-amd64.iso",
+      "iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.3-server-amd64.iso",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -51,7 +57,7 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "1024"
+          "512"
         ],
         [
           "modifyvm",
@@ -73,20 +79,19 @@
         "initrd=/install/initrd.gz -- <enter><wait>"
       ],
       "boot_wait": "4s",
-      "disk_size": 40960,
+      "disk_size": 10140,
       "guest_os_type": "ubuntu-64",
-      "headless": "true",
       "http_directory": "http",
-      "iso_checksum": "2cbe868812a871242cdcdd8f2fd6feb9",
+      "iso_checksum": "a8c667e871f48f3a662f3fbf1c3ddb17",
       "iso_checksum_type": "md5",
-      "iso_url": "http://releases.ubuntu.com/precise/ubuntu-12.04.3-server-amd64.iso",
+      "iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.2-server-amd64.iso",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
       "ssh_wait_timeout": "10000s",
       "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'vagrant'|sudo -S sh 'shutdown.sh'",
       "vmx_data": {
-        "memsize": "1024",
+        "memsize": "512",
         "numvcpus": "1",
         "cpuid.coresPerSocket": "1"
       }
