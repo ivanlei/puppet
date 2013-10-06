@@ -89,7 +89,7 @@ Vagrant.configure('2') do |global_config|
 
       if 'puppet' == provisioner
         config.vm.provision :puppet do |puppet|
-          puppet.module_path       = ['/vms/modules', '/vms/git_modules']
+          puppet.module_path       = ['/vms/modules']
           puppet.manifests_path    = '/vms/manifests'
           puppet.manifest_file     = "#{vm_name}.pp"
           puppet.hiera_config_path = '/vms/hiera.yaml'

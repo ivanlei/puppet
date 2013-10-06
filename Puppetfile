@@ -25,12 +25,6 @@ mod 'ripienaar/concat',
 mod 'puppetlabs/create_resources',
 	:git =>  'https://github.com/puppetlabs/puppetlabs-create_resources.git'
 
-mod 'ivanlei/puppetdb',
-	:git => 'https://github.com/puppetlabs/puppetlabs-puppetdb.git'
-
-mod 'ivanlei/puppet',
-	:git => 'https://github.com/ivanlei/puppetlabs-puppet'
-
 mod 'ivanlei/metasploit',
 	:git =>  'git@github.com:ivanlei/puppet-metasploit.git'
 
