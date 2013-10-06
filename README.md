@@ -37,3 +37,10 @@ sudo "/Applications/VMware Fusion.app/Contents/Library/vmnet-cli" -c
 sudo "/Applications/VMware Fusion.app/Contents/Library/vmnet-cli" --start
 ```
 
+troubleshooting vagrant up
+--------------------------
+I've run into issues a few times with using custom SSH key pairs for vagrant.  Try:
+```
+VAGRANT_LOG=info vagrant up
+```
+

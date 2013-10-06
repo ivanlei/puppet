@@ -4,6 +4,11 @@
   ],
   "provisioners": [
     {
+      "type": "file",
+      "source": "/vms/packer/ssh/id_rsa_vagrant.pub",
+      "destination": "/tmp/id_rsa_vagrant.pub"
+    },
+    {
       "type": "shell",
       "scripts": [
         "scripts/base.sh",
