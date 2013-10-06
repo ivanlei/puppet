@@ -4,6 +4,8 @@ This collects the puppet, hiera, packer, and vagrant config I use to bring up ub
 
 setup
 -----
+
+* Grab the code and get it setup
 ```
 # Clone the repo.
 git clone git@github.com:ivanlei/vms.git ~/vms
@@ -20,12 +22,27 @@ ln -s /vms/.puppet ~/.puppet
 # Vagrant config is under source control
 ln -s /vms/.vagrant.d ~/.vagrant.d
 
+# The following probably belong in .bashrc
 export VAGRANT_HOME=/vms/.vagrant.d
 export PACKER_CACHE=/vms/.packer.d
 ```
 
-Install tools: RVM, VirtualBox, VMWare Fusion, Puppet, Hiera, Packer, Vagrant, Puppet-Librarian
-TODO: gemfile to installing it all?
+Install rvm and ruby ruby 1.9.3: http://rvm.io
+```
+curl -L https://get.rvm.io | bash -s stable --ruby=1.9.3
+```
+
+* Install virtualbox: https://www.virtualbox.org/wiki/Downloads
+* Install vagrant: http://downloads.vagrantup.com
+* Install packer: http://www.packer.io/downloads.html
+* Install puppet: https://github.com/puppetlabs/puppet
+* Install hiera: https://github.com/puppetlabs/hiera
+* Install some useful gems:
+  * librarian-puppet-maestrodev
+  * puppet-lint
+  * rake
+  * rspec
+  * veewee-to-packer
 
 troubleshooting vmware networking on mac
 ----------------------------------------
