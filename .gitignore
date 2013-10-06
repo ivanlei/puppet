@@ -3,13 +3,10 @@
 ._*
 *~
 .vagrant
-.vagrant.d
-!.vagrant.d/Vagrantfile
 modules/
 .tmp/
 .librarian/
 packer_cache/
-boxes/
 Puppetfile.lock
 *.box
 

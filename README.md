@@ -19,23 +19,16 @@ ln -s /vms/.puppet ~/.puppet
 
 # Vagrant config is under source control
 ln -s /vms/.vagrant.d ~/.vagrant.d
+
+export VAGRANT_HOME=/vms/.vagrant.d
+export PACKER_CACHE=/vms/.packer.d
 ```
 
 Install tools: RVM, VirtualBox, VMWare Fusion, Puppet, Hiera, Packer, Vagrant, Puppet-Librarian
 TODO: gemfile to installing it all?
 
-using heira
------------
-In a vagrant file, make sure to include the following:
-```ruby
-config.vm.provision :puppet do |puppet|
-	puppet.hiera_config_path = '/vms/hiera.yaml'
-	puppet.working_directory = '/vms/hieradata'
-end
-```
-
-troubleshooting networking
---------------------------
+troubleshooting vmware networking on mac
+----------------------------------------
 Networking trouble with VMWare Fusion seems pretty common on Mac OSX.  If VMs won't start due to networking nonsense try:
 ```
 sudo "/Applications/VMware Fusion.app/Contents/Library/vmnet-cli" -c

@@ -10,8 +10,7 @@
         "scripts/vagrant.sh",
         "scripts/virtualbox.sh",
         "scripts/puppet-bootstrap-ubuntu.sh",
-        "scripts/cleanup.sh",
-        "scripts/zerodisk.sh"
+        "scripts/cleanup.sh"
       ],
       "override": {
         "virtualbox": {
@@ -55,13 +54,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "512"
+          "2048"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ]
     },
