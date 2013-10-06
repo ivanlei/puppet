@@ -105,6 +105,35 @@ I usually remove the old box before adding the new one:
 vagrant box remove <box_name>
 ```
 
+puppet
+------
+Puppet is used to provision vms during `vagrant up`.  Eventually it'd probably be smart to use puppet during the packer process.
+
+Development of puppet modules is easier when puppet works more or less the same inside the vms and on the host.
+Puppet config on the host is in `/vms/.puppet/puppet.conf`.  Changes there should be mirrored in `/vms/Vagrantfiles`.
+
+Dependencies and interdependencies between puppet modules can be difficult to manage.  `/vms/Puppetfile` lays out the required modules and versions.
+To pull the modules from github/puppetforge, use `librarian-puppet`:
+```
+librarian-puppet install --verbose
+```
+If a module has been updated, I find it easier (but slower) to simply repopulate `/vms/modules` entirely:
+```
+rm /vms/Puppetfile.lock
+rm -rf /vms/.librarian /vms/modules/
+librarian-puppet install --verbose
+```
+
+The `/vms/git_modules` directory is for puppet modules under active development.  `/vms/git_modules` should not be part of the `module_path` in `/vms/Vagrantfile` 
+
+hiera
+-----
+Hiera is used to store the data/custom config for puppet.
+`/vms/hieradata/hosts.yaml` is a bit special:
+  * `/vms/Vagrantfile` reads it to find the names, IPs, and provisioner info for vms.
+  * The [known_hosts](https://github.com/ivanlei/puppet-known_hosts) puppet module reads it to populate `/etc/hosts` to allow vms to find each other with known IPs and friendly names.
+`/vms/hieradata/common.yaml` has more generic additional config.
+
 troubleshooting vmware networking on mac
 ----------------------------------------
 Networking trouble with VMWare Fusion seems pretty common on Mac OSX.  If VMs won't start due to networking nonsense try:
